@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQ Laundry - Next Gen Booking Experience 3.5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #87cefa);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .watercolor-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/watercolor.png');
+            opacity: 0.2;
+            z-index: -1;
+            animation: watercolorFlow 30s ease-in-out infinite;
+        }
+
+        @keyframes watercolorFlow {
+
+            0%,
+            100% {
+                transform: scale(1) translateY(0);
+            }
+
+            50% {
+                transform: scale(1.05) translateY(-10px);
+            }
+        }
+
+        .laundry-anim {
+            position: absolute;
+            width: 60px;
+            opacity: 0.4;
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+            animation: watercolorFloat 15s ease-in-out infinite;
+        }
+
+        .laundry-anim:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .laundry-anim:nth-child(2) {
+            top: 30%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+
+        .laundry-anim:nth-child(3) {
+            top: 70%;
+            left: 15%;
+            animation-delay: 6s;
+        }
+
+        .laundry-anim:nth-child(4) {
+            top: 50%;
+            right: 20%;
+            animation-delay: 9s;
+        }
+
+        @keyframes watercolorFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: translateY(-80px) rotate(15deg) scale(1.1);
+                opacity: 0.6;
+            }
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            color: #0047ab;
+            font-weight: 700;
+            animation: watercolorSlide 1.5s ease-out;
+        }
+
+        @keyframes watercolorSlide {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+                filter: blur(5px);
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        .search-menu {
+            max-width: 1000px;
+            margin: 20px auto;
+            position: relative;
+            text-align: center;
+        }
+
+        .search-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .search-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border: 1px solid #93c5fd;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            width: 250px;
+            z-index: 20;
+            display: none;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-header {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #1e3a8a;
+            padding: 8px;
+            background: #e0f2fe;
+            border-bottom: 1px solid #93c5fd;
+        }
+
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+            color: #1e3a8a;
+        }
+
+        .suggestion-item:hover {
+            background: #f0f9ff;
+        }
+
+        .booking-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: watercolorFade 1s ease-in-out;
+        }
+
+        @keyframes watercolorFade {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+                filter: brightness(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: brightness(1);
+            }
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #e0f2fe, #f0f9ff);
+            transition: all 0.3s ease;
+            animation: itemPop 0.5s ease-out;
+        }
+
+        .item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        @keyframes itemPop {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #93c5fd;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-details h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+        .item-name-input {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            color: #1e3a8a;
+            border: 1px solid #93c5fd;
+            border-radius: 5px;
+            padding: 5px;
+            width: 200px;
+            background: #f0f9ff;
+        }
+
+        .suggestion-box {
+            position: absolute;
+            background: #fff;
+            border: 1px solid #93c5fd;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 200px;
+            z-index: 10;
+            display: none;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .qty-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .qty-btn:hover {
+            background: #1e40af;
+        }
+
+        .qty {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #93c5fd;
+            border-radius: 5px;
+            text-align: center;
+            background: #f0f9ff;
+        }
+
+        .service {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #93c5fd;
+            background: #f0f9ff;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: #1e3a8a;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .service:hover+.tooltip {
+            opacity: 1;
+        }
+
+        .item-price {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-left: auto;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .summary {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            text-align: right;
+            margin-top: 20px;
+            color: #1e3a8a;
+        }
+
+        .ai-insights {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #1e3a8a;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f9ff;
+            border-radius: 8px;
+        }
+
+        .add-item-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.3s;
+        }
+
+        .add-item-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #2563eb, #60a5fa);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #1e40af, #2563eb);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: linear-gradient(45deg, #e0f2fe, #f0f9ff);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: watercolorPop 0.5s ease-out;
+        }
+
+        .payment-options {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .payment-options .submit-btn {
+            background: #4CAF50;
+        }
+
+        .payment-options .submit-btn:hover {
+            background: #45a049;
+        }
+
+        .payment-options .submit-btn.online {
+            background: #008CBA;
+        }
+
+        .payment-options .submit-btn.online:hover {
+            background: #007B9E;
+        }
+
+        @keyframes watercolorPop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+                filter: blur(3px);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        .modal-content h3 {
+            font-family: 'Poppins', sans-serif;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .modal-content button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .item-img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .summary,
+            .ai-insights {
+                text-align: left;
+            }
+
+            header {
+                font-size: 2rem;
+            }
+
+            .item-name-input {
+                width: 100%;
+            }
+
+            .item-price {
+                text-align: left;
+                margin-left: 0;
+            }
+
+            .suggestion-box,
+            .search-dropdown {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .item-img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .item-details h3,
+            .item-name-input {
+                font-size: 1.1rem;
+            }
+
+            .service {
+                min-width: 120px;
+            }
+
+            .item-price {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="watercolor-bg"></div>
+    <div class="laundry-anim">
+        <img src="https://img.icons8.com/color/96/000000/washing-machine.png" alt="washing machine">
+    </div>
+    <div class="laundry-anim">
+        <img src="https://imgs.search.brave.com/2PS_WQqIzwVbVKnMlbmiLQ4MvBRvtxjml7QO0lie9gg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZy/ZWVwaWsuY29tLzI1/Ni82OTgxLzY5ODE3/OTgucG5nP3NlbXQ9/YWlzX2h5YnJpZA"
+            alt="iron" style="height:150px;">
+    </div>
+    <div class="laundry-anim">
+        <img src="https://imgs.search.brave.com/EDRL-0LcDalcGnEanLslrCoa4Tc_T4th04vBOTDeRys/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDkv/MTU1LzY5Ni9zbWFs/bC9sYXVuZHJ5LWJh/c2tldC1maWxsZWQt/d2l0aC1jb2xvcmZ1/bC1jbG90aGVzLXBu/Zy5wbmc"
+            alt="basket" style="height:150px;">
+    </div>
+    <div class="laundry-anim">
+        <img src="https://img.icons8.com/color/96/000000/hanger.png" alt="hanger">
+    </div>
+
+    <header>SQ Laundry - The Next Gen Booking </header>
+
+    <div class="search-menu">
+        <button class="search-btn" onclick="toggleSearchDropdown()">Search Clothing Items</button>
+        <div class="search-dropdown" id="searchDropdown"></div>
+    </div>
+
+    <div class="booking-container" id="booking">
+        <button class="add-item-btn" onclick="addNewItem()">Add New Item</button>
+
+        <div class="item" data-wash="20" data-iron="15" data-both="30">
+            <div class="item-img"
+                style="background-image: url('https://imgs.search.brave.com/azf0bNvjkFQbLCs5Y3U9JYGfAQzR6zLleR_DwrkVM8k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pNS53/YWxtYXJ0aW1hZ2Vz/LmNvbS9zZW8vRnJ1/aXQtb2YtdGhlLUxv/b20tSEQtQ290dG9u/LWZvci1NZW4tV29t/ZW4tTG9uZy1TbGVl/dmUtVHNoaXJ0LVNo/aXJ0LUNhc3VhbC1T/cG9ydF9lYmM0ZjIz/OC0wZjcxLTQ1NzIt/OTA1MS1hNzdjYzQx/ODE2ZTlfMS4zYWE3/ZDM3MGNmMWRkOWNm/MjNjYWUwZWZjYmQ3/MTM5ZS5qcGVnP29k/bkhlaWdodD01ODAm/b2RuV2lkdGg9NTgw/Jm9kbkJnPUZGRkZG/Rg');">
+            </div>
+            <div class="item-details">
+                <h3>Shirt</h3>
+                <div class="controls">
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+                        <input type="number" min="0" value="0" class="qty" oninput="updateTotals()" />
+                        <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+                    </div>
+                    <select class="service" oninput="updateTotals()">
+                        <option value="wash">Washing (₹20)</option>
+                        <option value="iron">Ironing (₹15)</option>
+                        <option value="both">Both (₹30)</option>
+                    </select>
+                    <div class="tooltip">Select service type</div>
+                    <div class="item-price">₹0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="item" data-wash="25" data-iron="20" data-dryclean="200" data-both="40">
+            <div class="item-img"
+                style="background-image: url('https://imgs.search.brave.com/hBoMX0PCPzFSumfD1SRykUJ1JdJkkOrONRgewYS-bns/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA5LzA4LzQ1LzEw/LzM2MF9GXzkwODQ1/MTAwMV9ROE1LNDZu/VXNJNWtVTDhxbWh5/ODEySU5TSEdaOFJn/di5qcGc');">
+            </div>
+            <div class="item-details">
+                <h3>Pant</h3>
+                <div class="controls">
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+                        <input type="number" min="0" value="0" class="qty" oninput="updateTotals()" />
+                        <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+                    </div>
+                    <select class="service" oninput="updateTotals()">
+                        <option value="wash">Washing (₹25)</option>
+                        <option value="iron">Ironing (₹20)</option>
+                        <option value="dryclean">Dry Cleaning (₹200)</option>
+                        <option value="both">Both (₹40)</option>
+                    </select>
+                    <div class="tooltip">Select service type</div>
+                    <div class="item-price">₹0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary">
+            Total Quantity: <span id="totalQty">0</span> |
+            Total Price: ₹<span id="totalPrice">0</span> |
+            Estimated Total: ₹<span id="estimatedPrice">0</span>
+        </div>
+        <div class="ai-insights" id="aiInsights">
+            AI Insights: No items selected yet.
+        </div>
+
+        <button class="submit-btn" onclick="initiatePayment()">Submit Booking</button>
+    </div>
+
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <h3>Choose Payment Method</h3>
+            <div class="payment-options">
+                <button class="submit-btn" onclick="showConfirmation('Cash on Delivery')">Cash on Delivery</button>
+                <button class="submit-btn online" onclick="initiateUpiPayment()">Online Payment (UPI)</button>
+            </div>
+            <button onclick="document.getElementById('paymentModal').style.display = 'none'">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <h3>Booking Confirmed!</h3>
+            <p>Your laundry booking has been successfully placed.</p>
+            <p>Payment Method: <strong id="selectedPaymentMethod"></strong></p>
+            <p>Total: ₹<span id="modalTotal">0</span></p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+
+    <script>
+        const itemSuggestions = {
+            "Men's Clothing": ['Shirt', 'Trousers', 'Pant', 'Jeans', 'T-shirt', 'Jacket'],
+            "Women's Clothing": ['Saree', 'Dress', 'Skirt'],
+            "Kids' Clothing": ['Kids Wear'],
+            "Accessories": ['Sweater']
+        };
+        const itemImages = {
+            'shirt': 'https://imgs.search.brave.com/azf0bNvjkFQbLCs5Y3U9JYGfAQzR6zLleR_DwrkVM8k/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pNS53/YWxtYXJ0aW1hZ2Vz/LmNvbS9zZW8vRnJ1/aXQtb2YtdGhlLUxv/b20tSEQtQ290dG9u/LWZvci1NZW4tV29t/ZW4tTG9uZy1TbGVl/dmUtVHNoaXJ0LVNo/aXJ0LUNhc3VhbC1T/cG9ydF9lYmM0ZjIz/OC0wZjcxLTQ1NzIt/OTA1MS1hNzdjYzQx/ODE2ZTlfMS4zYWE3/ZDM3MGNmMWRkOWNm/MjNjYWUwZWZjYmQ3/MTM5ZS5qcGVnP29k/bkhlaWdodD01ODAm/b2RuV2lkdGg9NTgw/Jm9kbkJnPUZGRkZG/Rg',
+            'trousers': 'https://imgs.search.brave.com/a6xrKB59gMGjS5_qiuRMF8n-YBcme4ezV1MggV4Qyyk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDgv/MTU0Lzc2OC9zbWFs/bC9iZWlnZS1tZW5z/LXNob3J0cy1waG90/by5qcGc',
+            'pant': 'https://imgs.search.brave.com/hBoMX0PCPzFSumfD1SRykUJ1JdJkkOrONRgewYS-bns/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA5LzA4LzQ1LzEw/LzM2MF9GXzkwODQ1/MTAwMV9ROE1LNDZu/VXNJNWtVTDhxbWh5/ODEySU5TSEdaOFJn/di5qcGc',
+            'saree': 'https://imgs.search.brave.com/McbTe9IiFZAYpSqUQAlsUeVSxy9LLNEvVvqHW1pwzsk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA3LzI2Lzk0LzQ3/LzM2MF9GXzcyNjk0/NDc5NV9EOVg5MWds/RW9zcTNiUnBoZFdW/VElJOEZMUXBsSTNp/dC5qcGc',
+            'jeans': 'https://imgs.search.brave.com/QP97rmWIzdfVwKq2Q7LQLXdcNj3kDNV09Lw_KpdXvvM/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9qZWFu/cy1pLWhhdmUtYmVl/bi13ZWFyaW5nLXll/YXJzLTM1OTQ2OTQ3/LmpwZw',
+            'jacket': 'https://imgs.search.brave.com/zL-OhK94hrbzTSXTBmBos7_ct47nmOJrWUBNfk4ONic/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTIx/MDEwNjIxMi9waG90/by9ibGFjay1qYWNr/ZXQtYW5kLXQtc2hp/cnQtaXNvbGF0ZWQt/b24td2hpdGUtYmFj/a2dyb3VuZC5qcGc_/cz02MTJ4NjEyJnc9/MCZrPTIwJmM9TjFQ/bVFFQ0pjeElWOWdG/MUpJMlRUcFpkaE5w/R21uUUhDcERCalMy/Vm91az0',
+            'kids wear': 'https://imgs.search.brave.com/WqdA12c328fZ-iz4OUvtuJNTsq7KyiWjxnnDNV_cxog/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/bmV4dC5jby51ay9j/bXMvcmVzb3VyY2Uv/YmxvYi8xMDUwNjM2/LzY3ZmNhZjFkMTU2/NGMzNGU3ZDE3MDE4/OWU3ODlhOWRiLzI1/LTA1LTI1LXJvdW5k/ZWwtMi1ib3lzLW1p/bi1kYXRhLmpwZw',
+            'sweater': 'https://imgs.search.brave.com/3HtkRD_gCPMqPT1Vj4a17A8Upez53-XeyzcOUj4u-ic/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA3LzY5Lzk0LzU5/LzM2MF9GXzc2OTk0/NTk2Nl9Ka2lNWERD/M3BiWUZNNVlCa1po/dnRrNkxqalBjOXhG/US5qcGc',
+            't-shirt': 'https://imgs.search.brave.com/ZpuKNmCtCp86yDMQwXtlGkPUoSfsrhnQut1k3bzC5Ko/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/OTFvMFc3akdvbkwu/anBn',
+            'skirt': 'https://imgs.search.brave.com/BCCvOzvOU-2yewZn0z8qX2tieHcTAen4Q3x0itkTETU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzM0LzA2Lzg2/LzM2MF9GXzEzNDA2/ODY3MF9TYkRNTmJD/ZUxlWDZEYURpZmJ6/SFowb3hhbFNoRlFS/WC5qcGc',
+            'dress': 'https://imgs.search.brave.com/YX2fXnW4oay6ipk1a7ySVoK2i1bU3oW1T9bO2B4xZ6c/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTY0/MjM4Njk0L3Bob3Rv/L2Zhc2hpb24tc3R5/bGUtYmxhY2stZHJl/c3Mtb24td2hpdGUt/YmFja2dyb3VuZC5q/cGc_cz02MTJ4NjEy/Jnc9MCZrPTIwJmM9/M3dMRnZ0cnl1eURR/Z1dSM1pRTDlWa0pS/UGl2d2Y1aW1xQ0kw/S3dFU2xCZz0',
+            'default': 'https://imgs.search.brave.com/vRwduhxTiTEFwEAJcDAyBEAs36_KUDlbgxK7t8lQGRw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC8w/Ny8wMC9xdWVzdGlv/bi1tYXJrLXN5bWJv/bC12ZWN0b3ItMTM4/MDcwMC5qcGc'
+        };
+        const itemPricing = {
+            'shirt': {
+                wash: 20,
+                iron: 15,
+                both: 30,
+                dryclean: 0
+            },
+            'trousers': {
+                wash: 25,
+                iron: 20,
+                dryclean: 200,
+                both: 40
+            },
+            'pant': {
+                wash: 25,
+                iron: 20,
+                dryclean: 200,
+                both: 40
+            },
+            'saree': {
+                wash: 50,
+                iron: 30,
+                dryclean: 300,
+                both: 70
+            },
+            'jeans': {
+                wash: 30,
+                iron: 25,
+                dryclean: 200,
+                both: 50
+            },
+            'jacket': {
+                wash: 40,
+                iron: 30,
+                dryclean: 250,
+                both: 60
+            },
+            'kids wear': {
+                wash: 20,
+                iron: 15,
+                dryclean: 150,
+                both: 30
+            },
+            'sweater': {
+                wash: 35,
+                iron: 25,
+                dryclean: 200,
+                both: 55
+            },
+            't-shirt': {
+                wash: 20,
+                iron: 15,
+                dryclean: 150,
+                both: 30
+            },
+            'skirt': {
+                wash: 25,
+                iron: 20,
+                dryclean: 200,
+                both: 40
+            },
+            'dress': {
+                wash: 40,
+                iron: 30,
+                dryclean: 250,
+                both: 60
+            },
+            'default': {
+                wash: 30,
+                iron: 25,
+                dryclean: 200,
+                both: 50
+            }
+        };
+
+        function updateTotals() {
+            let qtySum = 0;
+            let priceSum = 0;
+            const serviceCounts = {
+                wash: 0,
+                iron: 0,
+                dryclean: 0,
+                both: 0
+            };
+
+            document.querySelectorAll('.item').forEach(item => {
+                const qty = parseInt(item.querySelector('.qty').value) || 0;
+                const service = item.querySelector('.service').value;
+                const pricePerItem = parseInt(item.dataset[service]) || 0;
+                const totalItemPrice = qty * pricePerItem;
+
+                item.querySelector('.item-price').textContent = '₹' + totalItemPrice;
+                qtySum += qty;
+                priceSum += totalItemPrice;
+                if (qty > 0) serviceCounts[service] += qty;
+            });
+
+            document.getElementById('totalQty').textContent = qtySum;
+            document.getElementById('totalPrice').textContent = priceSum;
+
+            // AI Price Prediction
+            const avgPricePerItem = qtySum > 0 ? priceSum / qtySum : 0;
+            const estimatedPrice = Math.round(avgPricePerItem * qtySum * 1.1);
+            document.getElementById('estimatedPrice').textContent = estimatedPrice;
+
+            // AI Insights
+            const mostPopularService = Object.keys(serviceCounts).reduce((a, b) =>
+                serviceCounts[a] > serviceCounts[b] ? a : b, 'none');
+            const insights = qtySum > 0 ?
+                'Most popular service: ' + mostPopularService.charAt(0).toUpperCase() + mostPopularService.slice(1) + ' (' + serviceCounts[mostPopularService] + ' items)' :
+                'No items selected yet.';
+            document.getElementById('aiInsights').textContent = 'AI Insights: ' + insights;
+        }
+
+        function updateQty(btn, delta) {
+            const input = btn.parentElement.querySelector('.qty');
+            let value = parseInt(input.value) || 0;
+            value = Math.max(0, value + delta);
+            input.value = value;
+            updateTotals();
+        }
+
+        function addNewItem(itemName = 'Custom Item') {
+            const key = itemName.toLowerCase();
+            const pricing = itemPricing[key] || itemPricing['default'];
+            const newItem = document.createElement('div');
+            newItem.className = 'item';
+            newItem.dataset.wash = pricing.wash;
+            newItem.dataset.iron = pricing.iron;
+            newItem.dataset.dryclean = pricing.dryclean;
+            newItem.dataset.both = pricing.both;
+            newItem.innerHTML = `
+                <div class="item-img" style="background-image: url('${itemImages[key] || itemImages['default']}');"></div>
+                <div class="item-details">
+                    <div style="position: relative;">
+                        <input type="text" class="item-name-input" value="${itemName}" oninput="updateItemName(this); showSuggestions(this)" onclick="showSuggestions(this)" />
+                        <div class="suggestion-box"></div>
+                    </div>
+                    <div class="controls">
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+                            <input type="number" min="0" value="0" class="qty" oninput="updateTotals()" />
+                            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+                        </div>
+                        <select class="service" oninput="updateTotals()">
+                            <option value="wash">Washing (₹${pricing.wash})</option>
+                            <option value="iron">Ironing (₹${pricing.iron})</option>
+                            ${pricing.dryclean > 0 ? '<option value="dryclean">Dry Cleaning (₹' + pricing.dryclean + ')</option>' : ''}
+                            <option value="both">Both (₹${pricing.both})</option>
+                        </select>
+                        <div class="tooltip">Select service type</div>
+                        <div class="item-price">₹0</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('booking').insertBefore(newItem, document.querySelector('.summary'));
+            updateTotals();
+        }
+
+        function updateItemName(input) {
+            const value = input.value.trim();
+            input.value = value || 'Custom Item';
+            const item = input.closest('.item');
+            const itemImg = item.querySelector('.item-img');
+            const key = value.toLowerCase();
+            itemImg.style.backgroundImage = 'url("' + (itemImages[key] || itemImages['default']) + '")';
+            const pricing = itemPricing[key] || itemPricing['default'];
+            item.dataset.wash = pricing.wash;
+            item.dataset.iron = pricing.iron;
+            item.dataset.dryclean = pricing.dryclean;
+            item.dataset.both = pricing.both;
+            const serviceSelect = item.querySelector('.service');
+            serviceSelect.innerHTML = `
+                <option value="wash">Washing (₹${pricing.wash})</option>
+                <option value="iron">Ironing (₹${pricing.iron})</option>
+                ${pricing.dryclean > 0 ? '<option value="dryclean">Dry Cleaning (₹' + pricing.dryclean + ')</option>' : ''}
+                <option value="both">Both (₹${pricing.both})</option>
+            `;
+            hideSuggestions(input);
+            updateTotals();
+        }
+
+        function showSuggestions(input) {
+            const value = input.value.toLowerCase().trim();
+            const suggestionBox = input.nextElementSibling;
+            suggestionBox.innerHTML = '';
+
+            const categories = Object.keys(itemSuggestions);
+            let hasSuggestions = false;
+
+            categories.forEach(category => {
+                const items = itemSuggestions[category].filter(item =>
+                    value === '' || item.toLowerCase().startsWith(value)
+                );
+                if (items.length > 0) {
+                    hasSuggestions = true;
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'category-header';
+                    categoryDiv.textContent = category;
+                    suggestionBox.appendChild(categoryDiv);
+                    items.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'suggestion-item';
+                        itemDiv.textContent = item;
+                        itemDiv.onclick = () => {
+                            input.value = item;
+                            updateItemName(input);
+                            updateTotals();
+                        };
+                        suggestionBox.appendChild(itemDiv);
+                    });
+                }
+            });
+
+            suggestionBox.style.display = hasSuggestions ? 'block' : 'none';
+        }
+
+        function hideSuggestions(input) {
+            const suggestionBox = input.nextElementSibling;
+            suggestionBox.style.display = 'none';
+        }
+
+        function toggleSearchDropdown() {
+            const dropdown = document.getElementById('searchDropdown');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.innerHTML = '';
+                const categories = Object.keys(itemSuggestions);
+                categories.forEach(category => {
+                    const items = itemSuggestions[category];
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'category-header';
+                    categoryDiv.textContent = category + ' (' + items.length + ')';
+                    dropdown.appendChild(categoryDiv);
+                    items.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'suggestion-item';
+                        itemDiv.textContent = item;
+                        itemDiv.onclick = () => {
+                            addNewItem(item);
+                            dropdown.style.display = 'none';
+                        };
+                        dropdown.appendChild(itemDiv);
+                    });
+                });
+                dropdown.style.display = 'block';
+            }
+        }
+
+        function initiatePayment() {
+            const totalQty = parseInt(document.getElementById('totalQty').textContent);
+            if (totalQty === 0) {
+                alert('Please add at least one item to your booking.');
+                return;
+            }
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function initiateUpiPayment() {
+            const amount = document.getElementById('totalPrice').textContent;
+            if (!amount || parseFloat(amount) <= 0) {
+                alert("Cannot initiate payment for a zero amount.");
+                return;
+            }
+
+            // --- IMPORTANT: REPLACE WITH YOUR DETAILS ---
+            const merchantVpa = 'your-upi-id@oksbi'; // <--- CHANGE THIS to your UPI ID
+            const merchantName = 'SQ Laundry'; // <--- CHANGE THIS to your name or business name
+            // -----------------------------------------
+
+            const transactionNote = 'Payment for laundry services';
+            const transactionId = 'SQL' + new Date().getTime(); // Creates a semi-unique ID
+
+            // Construct the UPI URL. encodeURIComponent ensures special characters in names work correctly.
+            const upiUrl = `upi://pay?pa=${merchantVpa}&pn=${encodeURIComponent(merchantName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}&tr=${transactionId}`;
+
+            // First, show the confirmation modal so the user knows the order is placed.
+            showConfirmation('Online Payment (UPI) - Pending');
+
+            // Then, redirect to the UPI app.
+            window.location.href = upiUrl;
+        }
+
+
+        function showConfirmation(paymentMethod) {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('selectedPaymentMethod').textContent = paymentMethod;
+            document.getElementById('modalTotal').textContent = document.getElementById('totalPrice').textContent;
+            document.getElementById('confirmationModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+            document.querySelectorAll('.qty').forEach(input => input.value = 0);
+            const customItems = document.querySelectorAll('.item-name-input');
+            // Start from the end to avoid issues with live NodeList when removing items
+            for (let i = customItems.length - 1; i >= 0; i--) {
+                const itemDiv = customItems[i].closest('.item');
+                // Do not remove the initial 'Shirt' and 'Pant' items
+                const itemName = itemDiv.querySelector('h3, .item-name-input').value || itemDiv.querySelector('h3, .item-name-input').textContent;
+                if (itemName !== 'Shirt' && itemName !== 'Pant') {
+                     itemDiv.remove();
+                }
+            }
+            updateTotals();
+        }
+
+
+        document.querySelectorAll('.qty, .service').forEach(el =>
+            el.addEventListener('input', updateTotals)
+        );
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('searchDropdown');
+            const searchBtn = document.querySelector('.search-btn');
+            if (!dropdown.contains(e.target) && e.target !== searchBtn) {
+                dropdown.style.display = 'none';
+            }
+
+            // Close suggestion boxes if clicking outside of them
+            document.querySelectorAll('.suggestion-box').forEach(box => {
+                const input = box.previousElementSibling;
+                if (!box.contains(e.target) && e.target !== input) {
+                    box.style.display = 'none';
+                }
+            });
+        });
+
+        updateTotals();
+    </script>
+</body>
+
+</html>

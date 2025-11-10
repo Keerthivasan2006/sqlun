@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
+
+body {
+    background: url('https://images.pexels.com/photos/14642654/pexels-photo-14642654.jpeg') no-repeat center center/cover;
+    min-height: 100vh;
+    color: #2c3e50;
+
+}
+
+.navbar {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(6px);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #2980b9 !important;
+}
+
+.nav-link {
+    color: #2c3e50 !important;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #2980b9 !important;
+}
+
+.info-section {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    padding: 40px 30px;
+    margin-top: 60px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.info-section h2 {
+    color: #2980b9;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.info-section p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #34495e;
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #555;
+    font-size: 0.9rem;
+}

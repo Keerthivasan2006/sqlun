@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQ Laundry - Modern Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="blob"></div>
+    <div class="blob2"></div>
+
+    <div class="container">
+        <div class="login-card">
+            <div class="brand-logo">
+                <img src="https://res.cloudinary.com/dy5kyfcw4/image/upload/v1753682062/WhatsApp_Image_2025-07-28_at_13.40.41_bb62f6d7-removebg-preview_d5yl2s.png" alt="SQ Laundry Logo" class="logo">
+                <h1>SQ Laundry</h1>
+                <p class="tagline">Premium Laundry Services</p>
+            </div>
+
+
+            <form class="login-form">
+                <div class="form-group floating">
+    <input type="text" id="email" required>
+    <label for="email">Email ID</label>
+    <i class="fas fa-envelope"></i>
+</div>
+
+                <div class="form-group floating" id="otp-field" style="display: none;">
+                    <input type="text" id="otp" required>
+                    <label for="otp">OTP</label>
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <button type="button" class="login-btn" id="login-btn">Send OTP</button>
+
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Need help?</a>
+                </div>
+            </form>
+
+            <div class="register-link">
+
+            </div>
+        </div>
+
+        <div class="offers-section">
+            <h2>Current Offers</h2>
+            <div class="offer-card">
+                <div class="offer-badge">20% OFF</div>
+                <h3>Keep It Crisp</h3>
+                <p>On all dry cleaning services this week</p>
+                <button class="offer-btn">Book Now</button>
+            </div>
+            <div class="offer-card">
+                <div class="offer-badge">₹200 OFF</div>
+                <h3>Step Into July</h3>
+                <p>Special discount on bulk orders</p>
+                <button class="offer-btn">Book Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
